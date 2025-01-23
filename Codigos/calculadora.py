@@ -1,4 +1,3 @@
-from utilidades import *
 from re import fullmatch
 from sympy import sympify
 from time import sleep
