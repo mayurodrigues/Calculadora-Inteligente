@@ -5,4 +5,4 @@ def main():
     Calculadora.menu()
 
 if __name__ == "__main__":
-    Calculadora.menu()
+    main()
