@@ -1,5 +1,3 @@
 from re import fullmatch
-from sympy import sympify
+from sympy import sympify, evalf
 from time import sleep
-from calculadora import Calculadora
-import math
