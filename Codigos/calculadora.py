@@ -1,7 +1,4 @@
-from re import fullmatch
-from sympy import sympify
-from time import sleep
-import math
+from utilidades import *
 
 class Calculadora:
 
@@ -15,19 +12,19 @@ class Calculadora:
                 break
             elif fullmatch(r"[0-9.+\-*/()\[\]{}% ]+", operacao):
                 resultado = sympify(operacao)
-                print(f'RESULTADO: {resultado}')
+                print(f'RESULTADO: {resultado}.')
                 sleep(1)
             else:
-                print('ERRO: Digite uma operação válida ou "sair":')
+                print('ERRO: Entrada inválida.')
                 sleep(1)
 
     @staticmethod
     def operar_especifico():
         while True:
-            selecao = input('''Selecione a operação:
+            selecao = input('''As operações disponíveis são:
 [1] Logaritmo
 [2] Fatoração
-Digite o número correspondente à opção desejada ou "sair" para retornar ao menu:\n''')
+Digite o número correspondente à opção desejada ou "sair" para retornar ao menu.\n''')
 
             match selecao.lower():
                 case 'sair':
@@ -39,10 +36,10 @@ Digite o número correspondente à opção desejada ou "sair" para retornar ao m
                     if numero.isnumeric() and base.isnumeric():
                         numero = int(numero)
                         base = int(base)
-                        print(f'O logaritmo de {numero} na base {base} é {math.log(numero, base)}')
+                        print(f'O logaritmo de {numero} na base {base} é {math.log(numero, base)}.')
                         sleep(1)
                     else:
-                        print('ERRO: Digite valores válido ou "sair".')
+                        print('ERRO: Entrada inválida.')
                         sleep(1)
                 case '2':
                     numero = input('Digite o número do qual você deseja o fatorial.\n')
@@ -51,10 +48,10 @@ Digite o número correspondente à opção desejada ou "sair" para retornar ao m
                         print(f'O fatorial de {numero} é {math.factorial(numero)}')
                         sleep(1)
                     else:
-                        print('ERRO: Digite um número válido ou "sair".')
+                        print('ERRO: Entrada inválida')
                         sleep(1)
                 case _:
-                    print('ERRO: Digite uma opção válida ou "sair".')
+                    print('ERRO: Entrada inválida')
                     sleep(1)
 
     @staticmethod
@@ -67,7 +64,7 @@ Digite o número correspondente à opção desejada ou "sair" para retornar ao m
 [4] Estatística
 [5] Geometria
 [6] Finanças
-Digite o número correspondente à opção desejada ou "sair" para encerrar o programa:\n''')
+Digite o número correspondente à opção desejada ou "sair" para encerrar o programa.\n''')
 
             match selecao.lower():
                 case 'sair':
