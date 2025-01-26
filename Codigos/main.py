@@ -1,4 +1,4 @@
-from utilidades import *
+from calculadora import Calculadora
 
 def main():
     print('Bem-vinde à Calculadora Inteligente!')
