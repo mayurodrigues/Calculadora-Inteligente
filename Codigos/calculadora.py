@@ -1,4 +1,5 @@
 from utilidades import *
+import math
 
 class Calculadora:
 
@@ -6,50 +7,69 @@ class Calculadora:
     def operar_simples():
         while True:
             operacao = input('Digite uma operação ou "sair" para retornar ao menu:\n')
-
             if operacao.lower() == 'sair':
                 Calculadora.menu()
                 break
-            elif fullmatch(r"[0-9.+\-*/()\[\]{}% ]+", operacao):
-                resultado = sympify(operacao)
-                print(f'RESULTADO: {resultado}.')
+            elif fullmatch(r'[0-9.+\-*/()\[\]{}% ]+', operacao):
+                # O símbolo de adição fora dos colchetes permite que a função verifique múltiplos caracteres
+                resultado = sympify(operacao).evalf() # Converte o resultado simbólico para numérico (ex: 2*sqrt(6))
+                if resultado == int(resultado):  # Verifica se o resultado é exatamente um inteiro
+                    resultado = int(resultado)  # Converte para inteiro, sem arredondamento
+                    print(f'RESULTADO: {resultado}')
+                else:
+                    print(f'RESULTADO: {resultado}')
+                    sleep(1)
+            else:
+                print('ERRO: Entrada inválida.')
+                sleep(1)
+
+    @staticmethod
+    def calcular_logaritmo():
+        while True:
+            numero = input('Digite o número do qual você deseja o logaritmo ou "sair" para voltar ao menu anterior:\n')
+            base = input('Digite a base do logaritmo ou "sair" para voltar ao menu anterior:\n')
+            if numero.lower() or base.lower() == 'sair':
+                Calculadora.operar_especifico()
+                break
+            elif numero.isnumeric() and base.isnumeric():
+                numero = int(numero)
+                base = int(base)
+                print(f'O logaritmo de {numero} na base {base} é {math.log(numero, base)}.')
                 sleep(1)
             else:
                 print('ERRO: Entrada inválida.')
                 sleep(1)
 
     @staticmethod
+    def calcular_fatorial():
+        while True:
+            entrada = input('Digite o número do qual você deseja o fatorial ou "sair" para retornar ao menu anterior.\n')
+            if entrada.lower() == 'sair':
+                Calculadora.operar_especifico()
+                break
+            elif entrada.isnumeric():
+                entrada = int(entrada)
+                print(f'O fatorial de {entrada} é {math.factorial(entrada)}')
+                sleep(1)
+            else:
+                print('ERRO: Entrada inválida')
+                sleep(1)
+
+    @staticmethod
     def operar_especifico():
         while True:
             selecao = input('''As operações disponíveis são:
-[1] Logaritmo
-[2] Fatoração
-Digite o número correspondente à opção desejada ou "sair" para retornar ao menu.\n''')
+    [1] Logaritmo
+    [2] Fatoração
+    Digite o número correspondente à opção desejada ou "sair" para retornar ao menu.\n''')
 
             match selecao.lower():
                 case 'sair':
                     Calculadora.menu()
-                    break
                 case '1':
-                    numero = input('Digite o número do qual você deseja o logaritmo:\n')
-                    base =  input('Digite a base do logaritmo:\n')
-                    if numero.isnumeric() and base.isnumeric():
-                        numero = int(numero)
-                        base = int(base)
-                        print(f'O logaritmo de {numero} na base {base} é {math.log(numero, base)}.')
-                        sleep(1)
-                    else:
-                        print('ERRO: Entrada inválida.')
-                        sleep(1)
+                    Calculadora.calcular_logaritmo()
                 case '2':
-                    numero = input('Digite o número do qual você deseja o fatorial.\n')
-                    if numero.isnumeric():
-                        numero = int(numero)
-                        print(f'O fatorial de {numero} é {math.factorial(numero)}')
-                        sleep(1)
-                    else:
-                        print('ERRO: Entrada inválida')
-                        sleep(1)
+                    Calculadora.calcular_fatorial()
                 case _:
                     print('ERRO: Entrada inválida')
                     sleep(1)
