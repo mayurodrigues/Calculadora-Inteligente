@@ -4,7 +4,6 @@ from time import sleep
 import math
 
 class Calculadora:
-
     @staticmethod
     def operar_simples():
         while True:
@@ -20,7 +19,8 @@ class Calculadora:
                 elif resultado.is_rational:
                     print(f'RESULTADO: {float(resultado)}')
                 else:
-                    print(f'RESULTADO: {resultado.evalf()}')
+                    print(f'RESULTADO DECIMAL: {resultado.evalf()}')
+                    print(f'RESULTADO COM RADICAL: {resultado}')
                     # Converte o resultado simbólico para numérico (ex: 2*sqrt(6))
             else:
                 print('ERRO: Entrada inválida.')
@@ -64,6 +64,8 @@ class Calculadora:
             selecao = input('''As operações disponíveis são:
     [1] Logaritmo
     [2] Fatoração
+    [3] Radiciação (automática)
+    [4] Porcentagem (automática)
     Digite o número correspondente à opção desejada ou "sair" para retornar ao menu.\n''')
 
             match selecao.lower():
