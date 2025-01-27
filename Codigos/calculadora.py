@@ -1,4 +1,6 @@
-from utilidades import *
+from sympy import sympify
+from re import fullmatch
+from time import sleep
 import math
 
 class Calculadora:
@@ -12,13 +14,14 @@ class Calculadora:
                 break
             elif fullmatch(r'[0-9.+\-*/()\[\]{}% ]+', operacao):
                 # O símbolo de adição fora dos colchetes permite que a função verifique múltiplos caracteres
-                resultado = sympify(operacao).evalf() # Converte o resultado simbólico para numérico (ex: 2*sqrt(6))
-                if resultado == int(resultado):  # Verifica se o resultado é exatamente um inteiro
-                    resultado = int(resultado)  # Converte para inteiro, sem arredondamento
-                    print(f'RESULTADO: {resultado}')
+                resultado = sympify(operacao)
+                if resultado.is_Integer:
+                    print(f'RESULTADO: {int(resultado)}')
+                elif resultado.is_rational:
+                    print(f'RESULTADO: {float(resultado)}')
                 else:
-                    print(f'RESULTADO: {resultado}')
-                    sleep(1)
+                    print(f'RESULTADO: {resultado.evalf()}')
+                    # Converte o resultado simbólico para numérico (ex: 2*sqrt(6))
             else:
                 print('ERRO: Entrada inválida.')
                 sleep(1)
