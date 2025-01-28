@@ -4,12 +4,12 @@ from time import sleep
 import math
 
 class Calculadora:
-    @staticmethod
-    def operar_simples():
+    @classmethod
+    def operar_simples(cls):
         while True:
             operacao = input('Digite uma operação ou "sair" para retornar ao menu:\n').strip()
             if operacao.lower() == 'sair':
-                Calculadora.menu()
+                cls.menu()
             elif fullmatch(r'[0-9.+\-*/()\[\]{}% ]+', operacao):
                 # O símbolo de adição fora dos colchetes permite que a função verifique múltiplos caracteres
                 resultado = sympify(operacao)
@@ -28,28 +28,31 @@ class Calculadora:
                 print('Por favor, digite uma entrada válida.\n')
                 sleep(1)
 
-    @staticmethod
-    def calcular_logaritmo():
+    @classmethod
+    def calcular_logaritmo(cls):
         while True:
             numero = input('Digite o número do qual você deseja o logaritmo ou "sair" para voltar ao menu anterior:\n').strip()
+            if numero.lower() == 'sair':
+                cls.operar_especifico()
             base = input('Digite a base do logaritmo ou "sair" para voltar ao menu anterior:\n')
-            if numero.lower() or base.lower() == 'sair':
-                Calculadora.operar_especifico()
+            if base.lower() == 'sair':
+                cls.operar_especifico()
+
             elif numero.isnumeric() and base.isnumeric():
-                numero = int(numero)
-                base = int(base)
+                numero = float(numero)
+                base = float(base)
                 print(f'O logaritmo de {numero} na base {base} é {math.log(numero, base)}.')
                 sleep(1)
             else:
                 print('Por favor, digite uma entrada válida.\n')
                 sleep(1)
 
-    @staticmethod
-    def calcular_fatorial():
+    @classmethod
+    def calcular_fatorial(cls):
         while True:
             entrada = input('Digite o número do qual você deseja o fatorial ou "sair" para retornar ao menu anterior.\n').strip()
             if entrada.lower() == 'sair':
-                Calculadora.operar_especifico()
+                cls.operar_especifico()
             elif entrada.isnumeric():
                 entrada = int(entrada)
                 print(f'O fatorial de {entrada} é {math.factorial(entrada)}')
@@ -58,13 +61,17 @@ class Calculadora:
                 print('Por favor, digite uma entrada válida.\n')
                 sleep(1)
 
-    @staticmethod
-    def calcular_radiciacao():
+    @classmethod
+    def calcular_porcentagem(cls):
+        pass
+
+    @classmethod
+    def calcular_radiciacao(cls):
         while True:
             entrada = input('Digite um número para ver suas raízes (quadrada, cúbica e quinta) ou "sair" para retorna ao menu anterior:\n').strip()
 
             if entrada.lower() == 'sair':
-                Calculadora.operar_especifico()
+                cls.operar_especifico()
             elif entrada.isdigit():
                 raiz_quadrada = sympify(f'{entrada} ** (1/2)')
                 raiz_cubica = sympify(f'{entrada} ** (1/3)')
@@ -101,8 +108,8 @@ class Calculadora:
                 print('Por favor, digite uma entrada válida.\n')
                 sleep(1)
 
-    @staticmethod
-    def operar_especifico():
+    @classmethod
+    def operar_especifico(cls):
         while True:
             selecao = input('''As operações disponíveis são:
 [1] Logaritmo
@@ -113,21 +120,21 @@ Digite o número correspondente à opção desejada ou "sair" para retornar ao m
 
             match selecao.lower():
                 case 'sair':
-                    Calculadora.menu()
+                    cls.menu()
                 case '1':
-                    Calculadora.calcular_logaritmo()
+                    cls.calcular_logaritmo()
                 case '2':
-                    Calculadora.calcular_fatorial()
+                    cls.calcular_fatorial()
                 case '3':
-                    Calculadora.calcular_radiciacao()
+                    cls.calcular_radiciacao()
                 case '4':
-                    pass
+                    cls.calcular_porcentagem()
                 case _:
                     print('ERRO: Entrada inválida')
                     sleep(1)
 
-    @staticmethod
-    def menu():
+    @classmethod
+    def menu(cls):
         while True:
             selecao = input('''Os tipos de operação disponíveis são:
 [1] Operações simples
@@ -140,6 +147,8 @@ Digite o número correspondente à opção desejada ou "sair" para encerrar o pr
 
             match selecao.lower():
                 case 'sair':
+                    print('Até mais!')
+                    sleep(1)
                     exit()
                 case '1':
                     print('''Essa categoria permite:
@@ -153,10 +162,10 @@ Digite o número correspondente à opção desejada ou "sair" para encerrar o pr
     - Radiciação (X ** (1/2) para raíz quadrada, X ** (1/3) para raíz cúbica e X ** (1/5) para raíz quinta)
     - Porcentagem (X * (P/100) sendo P a porcentagem de X desejada)
     - Uso de chaves, colchetes e parênteses''')
-                    Calculadora.operar_simples()
+                    cls.operar_simples()
                     break
                 case '2':
-                    Calculadora.operar_especifico()
+                    cls.operar_especifico()
                     break
                 case '3':
                     pass
