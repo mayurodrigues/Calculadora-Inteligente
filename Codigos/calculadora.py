@@ -25,7 +25,7 @@ class Calculadora:
                     # Converte o resultado simbólico para numérico (ex: 2*sqrt(6))
                     sleep(1)
             else:
-                print('Por favor, digite uma entrada válida.\n')
+                print('Por favor, digite uma entrada válida ou "sair".\n')
                 sleep(1)
 
     @classmethod
@@ -38,13 +38,13 @@ class Calculadora:
             if base.lower() == 'sair':
                 cls.operar_especifico()
 
-            elif numero.isnumeric() and base.isnumeric():
+            if numero.isdigit() and base.isdigit():
                 numero = float(numero)
                 base = float(base)
                 print(f'O logaritmo de {numero} na base {base} é {math.log(numero, base)}.')
                 sleep(1)
             else:
-                print('Por favor, digite uma entrada válida.\n')
+                print('Por favor, digite entradas válidas ou "sair".\n')
                 sleep(1)
 
     @classmethod
@@ -53,17 +53,13 @@ class Calculadora:
             entrada = input('Digite o número do qual você deseja o fatorial ou "sair" para retornar ao menu anterior.\n').strip()
             if entrada.lower() == 'sair':
                 cls.operar_especifico()
-            elif entrada.isnumeric():
+            elif entrada.isdigit():
                 entrada = int(entrada)
                 print(f'O fatorial de {entrada} é {math.factorial(entrada)}')
                 sleep(1)
             else:
-                print('Por favor, digite uma entrada válida.\n')
+                print('Por favor, digite uma entrada válida ou  "sair".\n')
                 sleep(1)
-
-    @classmethod
-    def calcular_porcentagem(cls):
-        pass
 
     @classmethod
     def calcular_radiciacao(cls):
@@ -80,7 +76,7 @@ class Calculadora:
 
                 if raiz_quadrada.is_Integer:
                     print(f'RAIZ QUADRADA: {int(raiz_quadrada)}\n')
-                elif raiz_quadrada.is_rational:
+                elif raiz_quadrada.is_Float:
                     print(f'RAIZ QUADRADA: {float(raiz_quadrada)}')
                 else:
                     print(f'RAIZ QUADRADA (Forma Decimal): {raiz_quadrada.evalf()}')
@@ -88,7 +84,7 @@ class Calculadora:
 
                 if raiz_cubica.is_Integer:
                     print(f'RAIZ CÚBICA: {int(raiz_cubica)}\n')
-                elif raiz_cubica.is_rational:
+                elif raiz_cubica.is_Float:
                     print(f'RAIZ CÚBICA: {float(raiz_cubica)}')
                 else:
                     print(f'RAIZ CÚBICA (Forma Decimal): {raiz_cubica.evalf()}')
@@ -105,8 +101,36 @@ class Calculadora:
                 sleep(1)
 
             else:
-                print('Por favor, digite uma entrada válida.\n')
+                print('Por favor, digite uma entrada válida ou "sair".\n')
                 sleep(1)
+
+    @classmethod
+    def calcular_porcentagem(cls):
+        while True:
+            numero = input('Digite o número do qual deseja extrair a porcentagem ou "sair" para retornar ao menu anterior:\n').strip()
+            if numero.lower() == 'sair':
+                cls.operar_especifico()
+
+            porcentagem = input('Digite a porcentagem desejada (apenas números) ou "sair" para retornar ao menu anterior:\n')
+            if porcentagem.lower() == 'sair':
+               cls.operar_especifico()
+
+            if fullmatch(r'[0-9. ]+', numero) and fullmatch(r'[0-9. ]+', porcentagem):
+                numero = float(numero)
+                if numero.is_integer():
+                    numero = int(numero)
+
+                porcentagem = float(porcentagem)
+                if porcentagem.is_integer():
+                    porcentagem = int(porcentagem)
+
+                resultado = numero * (porcentagem / 100)
+                if resultado.is_integer():
+                    resultado = int(resultado)
+
+                print(f'{porcentagem}% de {numero} é igual a {resultado}')
+            else:
+                print('Por favor, digite entradas válidas ou "sair".\n')
 
     @classmethod
     def operar_especifico(cls):
@@ -176,5 +200,5 @@ Digite o número correspondente à opção desejada ou "sair" para encerrar o pr
                 case '6':
                     pass
                 case _:
-                    print('ERRO: Digite uma opção válida ou "sair":')
+                    print('Por favor, digite uma entrada válida ou "sair".')
                     sleep(1)
