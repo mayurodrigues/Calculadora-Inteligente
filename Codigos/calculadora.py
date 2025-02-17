@@ -8,6 +8,10 @@ class Calculadora:
     def operar_simples(cls):
         while True:
             operacao = input('Digite uma operação ou "sair" para retornar ao menu:\n').strip()
+            substituicoes = {'×': '*', '÷': '/', ',': '.', '[': '(', ']': ')', '{': '(', '}': ')'}
+            for errado, certo in substituicoes.items():
+                operacao = operacao.replace(errado, certo)
+
             if operacao.lower() == 'sair':
                 cls.menu()
             elif fullmatch(r'[0-9.+\-*/()\[\]{}% ]+', operacao):
